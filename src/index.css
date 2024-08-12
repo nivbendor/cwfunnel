@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Playfair Display', serif;
+}
+
+/* Logo spinner animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.logo-spinner {
+  animation: spin 2000ms linear infinite;
+}
+
+/* Custom input styles */
+.group {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.input {
+  font-size: 16px;
+  padding: 10px 10px 10px 5px;
+  display: block;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #515151;
+  background: transparent;
+}
+
+.input:focus {
+  outline: none;
+}
+
+/* Remove spinner for number input */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* Custom radio button styles */
+.form-radio {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  display: inline-block;
+  vertical-align: middle;
+  background-origin: border-box;
+  user-select: none;
+  flex-shrink: 0;
+  border-radius: 100%;
+  border-width: 2px;
+}
+
+.form-radio:checked {
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e");
+  border-color: transparent;
+  background-color: currentColor;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Custom button styles */
+.btn {
+  @apply py-2 px-4 rounded transition duration-200 ease-in-out;
+}
+
+.btn-primary {
+  @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50;
+}
+
+/* Fun fact styles */
+.fun-fact {
+  @apply text-sm italic text-gray-600 mt-4 opacity-0 transition-opacity duration-300;
+}
+
+.fun-fact.visible {
+  @apply opacity-100;
+}
+
+/* Responsive styles */
+@media (max-width: 640px) {
+  .group {
+    max-width: 100%;
+  }
+}
+
