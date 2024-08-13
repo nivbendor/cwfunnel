@@ -76,7 +76,7 @@ const BenefitCalculator: React.FC<BenefitCalculatorProps> = ({ config }) => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type } = e.target;
-    setFormData((prevData: FormData) => ({
+    setFormData((prevData) => ({
       ...prevData,
       [name]: type === 'radio' ? value === 'YES' : value,
     }));
@@ -126,27 +126,36 @@ const BenefitCalculator: React.FC<BenefitCalculatorProps> = ({ config }) => {
         </div>
       );
     } else {
+      const inputName = currentStep.input === 'zip' ? 'zipCode' : currentStep.input;
+      let inputValue = formData[inputName as keyof FormData];
+      
+      // Ensure inputValue is always a string
+      if (inputValue === null || typeof inputValue === 'boolean') {
+        inputValue = '';
+      } else {
+        inputValue = String(inputValue);
+      }
+  
+      const placeholderText = currentStep.input === 'zip' ? 'Enter Zip Code' : 
+                              currentStep.input === 'age' ? 'Enter Age' : 
+                              'Enter Name';
+
       return (
-        <div className="group">
+        <div className="input-group">
           <input
             required
             type={currentStep.input === 'age' ? 'number' : 'text'}
-            name={currentStep.input}
-            value={
-              currentStep.input === 'age'
-                ? formData.age
-                : currentStep.input === 'zip'
-                ? formData.zipCode
-                : ''
-            }
+            name={inputName}
+            value={inputValue}
             onChange={handleInputChange}
             className="input"
+            placeholder={placeholderText}
             min={currentStep.input === 'age' ? 21 : undefined}
             max={currentStep.input === 'age' ? 90 : undefined}
           />
-          <span className="highlight"></span>
-          <span className="bar"></span>
-          <label>{currentStep.input === 'zip' ? 'Zip Code' : currentStep.input === 'age' ? 'Age' : 'Name'}</label>
+          <label className="user-label">  {/* Use 'user-label' class for the label */}
+            {/* {currentStep.input === 'zip' ? 'Zip Code' : currentStep.input === 'age' ? 'Age' : 'Name'} */}
+          </label>
         </div>
       );
     }
@@ -158,11 +167,7 @@ const BenefitCalculator: React.FC<BenefitCalculatorProps> = ({ config }) => {
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      <header className="w-full py-4 px-6 flex justify-between items-center border-b">
-        <button className="text-2xl">☰</button>
-        <h1 className={`text-2xl text-[#2d5ff1]`}>{copy.logo}</h1>
-        <div className="flex items-center space-x-4"></div>
-      </header>
+      {/* ... (keep the header) */}
       <main className="flex-grow flex items-center justify-center px-4">
         <AnimatePresence mode="wait">
           <motion.div
@@ -174,24 +179,24 @@ const BenefitCalculator: React.FC<BenefitCalculatorProps> = ({ config }) => {
             className="w-full max-w-md"
           >
             <h2 className={`${theme.fontSizes.heading} text-center mb-4`}>{copy.steps[step].headline}</h2>
-            <img src={copy.steps[step].visual} alt="Step illustration" className="w-full mb-6" />
             <p className={`${theme.fontSizes.subheading} text-center mb-8`}>{copy.steps[step].subHeadline}</p>
+            <div className="flex justify-center mb-8">
+              <img 
+                src={copy.steps[step].visual} 
+                alt="Step illustration" 
+                className="w-3/5 md:w-1/2 h-auto object-contain"
+              />
+            </div>
             
             {renderStepContent(copy.steps[step])}
             
             <button
               onClick={handleNext}
               disabled={isNextDisabled()}
-              className={`btn btn-primary w-full ${theme.fontSizes.button}`}
+              className={`btn btn-primary w-full ${theme.fontSizes.button} mt-8`}
             >
               {copy.buttons.next}
             </button>
-
-            {showFunFact && (
-              <p className={`fun-fact ${showFunFact ? 'visible' : ''}`}>
-                {copy.steps[step].funFact}
-              </p>
-            )}
           </motion.div>
         </AnimatePresence>
       </main>

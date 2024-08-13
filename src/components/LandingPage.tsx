@@ -42,7 +42,7 @@ export default LandingPage;
 //         transition={{ duration: 0.8 }}
 //         className="bg-white rounded-3xl shadow-lg p-8 max-w-md w-full text-center"
 //       >
-//         <img src="/cakewalk-logo.png" alt="Cakewalk Logo" className="w-16 h-16 mx-auto mb-6" />
+//         <img src="/cakewalk_logo.png" alt="Cakewalk Logo" className="w-16 h-16 mx-auto mb-6" />
 //         <h1 className="text-3xl font-bold mb-4">Benefit Calculator</h1>
 //         <p className="text-gray-600 mb-8">Calculate benefits with ease for small business employees</p>
 //         <motion.div 

@@ -1,0 +1,72 @@
+// const BenefitCalculator: React.FC<BenefitCalculatorProps> = ({ config }) => {
+//   const [step, setStep] = useState<number>(-1);
+//   const [formData, setFormData] = useState<FormData>({
+//     hasAccount: null,
+//     zipCode: '',
+//     age: '',
+//     firstName: '',
+//     lastName: '',
+//   });
+//   const [showLanding, setShowLanding] = useState(true);
+//   const [dependents, setDependents] = useState('');
+
+//   const { theme, copy } = config;
+
+//   useEffect(() => {
+//     const urlParams = new URLSearchParams(window.location.search);
+//     const fn = urlParams.get('fn');
+
+//     if (fn === '1') {
+//       setShowLanding(false);
+//       setStep(0);
+//     } else {
+//       // Default behavior (fn=0 or not set)
+//       const timer = setTimeout(() => {
+//         const eligibilityIndex = 1; // Default to 1 as we don't have dependents info yet
+//         const url = `https://nivbendor.github.io/john/?zipCode=&age=&eligibility=${eligibilityIndex}`;
+//         window.location.href = url;
+//       }, 2000);
+
+//       return () => clearTimeout(timer);
+//     }
+//   }, []);
+
+//   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     const { name, value, type } = e.target;
+//     setFormData((prevData) => ({
+//       ...prevData,
+//       [name]: type === 'radio' ? value === 'YES' : value,
+//     }));
+//   };
+
+//   const handleNext = () => {
+//     if (step < copy.steps.length - 1) {
+//       setStep((prevStep) => prevStep + 1);
+//     } else {
+//       handleSubmit();
+//     }
+//   };
+
+//   const handleSubmit = () => {
+//     const eligibilityIndex = dependents.includes('Family') ? 4 :
+//       dependents.includes('+Children') ? 3 :
+//       dependents.includes('+Spouse') ? 2 : 1;
+    
+//     const url = `https://nivbendor.github.io/john/?zipCode=${formData.zipCode}&age=${formData.age}&eligibility=${eligibilityIndex}`;
+//     window.location.href = url;
+//   };
+
+//   const isNextDisabled = () => {
+//     if (step === -1) return false;
+//     const currentStep = copy.steps[step];
+//     if ('options' in currentStep) {
+//       return formData.hasAccount === null;
+//     }
+//     if (currentStep.input === 'zip') {
+//       return !formData.zipCode;
+//     }
+//     if (currentStep.input === 'age') {
+//       return !formData.age;
+//     }
+//     return false;
+//   };
